@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+}
+
+@font-face {
+  font-family: 'Display';
+  src: url(/New-Aeonik-Trials/Aeonik-Bold.otf);
+}
+@font-face {
+  font-family: 'Title';
+  src: url(/New-Aeonik-Trials/Aeonik-Regular.otf);
+}
+@font-face {
+  font-family: 'Text';
+  src: url(/New-Aeonik-Trials/Aeonik-Light.otf);
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
+h1 {
+  font-family: Display, sans-serif;
+}
+p {
+  font-family: Title, sans-serif;
+}
+button {
+  font-family: Title, sans-serif;
+}
+.bg-image {
+  background-image: url('../../../public/images/bg.png');
+}
+.footer-image {
+  background-image: url('../../../public/images/Group 99.png');
+}
+::placeholder {
+  color: red;
+}
+.buttonColor {
+  background: linear-gradient(91.23deg, #b92032 36.75%, #c37bfc 100%);
+}
+
+.carousel-status {
+  display: none;
+}
+.react-multiple-carousel__arrow--righ {
+  right: 5px;
+}
+.react-multiple-carousel__arrow {
+  top: 0px;
+}
