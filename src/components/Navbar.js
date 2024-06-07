@@ -30,11 +30,11 @@ function Navbar() {
       <div className='m-auto flex w-full items-center justify-between px-5 py-5 font-text xl:container'>
         <Link to={'header'} href={'header'} duration={5000}>
           <h1
-            className='cursor-pointer md:ml-5 xl:ml-1.5'
+            className='cursor-pointer md:ml-5 xl:ml-1.5 text-red uppercase'
             data-aos='fade-right'
           >
             {/*<Image src={logo} width={125} height={40} alt='#' />*/}
-            theneweducation.uz
+            theneweducation{/*.uz*/}
           </h1>
         </Link>
         <div className='mt-4 hidden justify-center gap-10 text-base text-base  font-medium leading-4 text-black lg:flex'>
