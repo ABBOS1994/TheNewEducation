@@ -14,7 +14,6 @@ Vaqti: ${moment().format('DD-MM-YYYY HH:mm').toString()},
 Isim: ${name},
 Raqam: ${phone},
 Matin: ${message}`;
-
   try {
     const response = await axios.post(
       `https://api.telegram.org/bot${process.env.BOT_ID}/sendMessage`,
