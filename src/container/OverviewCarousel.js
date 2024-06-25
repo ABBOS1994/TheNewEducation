@@ -38,11 +38,11 @@ function OverviewCarousel() {
       >
         <button className='-mt-4 block p-1 md:p-3' onClick={() => previous()}>
           <div className='w-12 pl-1'>
-            <Left />
+            <Left/>
           </div>
         </button>
         <button onClick={() => next()}>
-          <Right />
+          <Right/>
         </button>
       </div>
     );
@@ -61,13 +61,13 @@ function OverviewCarousel() {
           arrows={false}
           renderButtonGroupOutside={true}
           shouldResetAutoplay={true}
-          customButtonGroup={<ButtonGroup />}
+          customButtonGroup={<ButtonGroup/>}
         >
           <div className='mt-10 '>
-            <Link href='Linguakill'>
+            <Link href='/Linguakill'>
               <div className='isolate mx-8  flex w-10/12 flex-col gap-5 rounded-2xl bg-white p-5 shadow-sm lg:mx-0'>
                 <div className='m-5'>
-                  <Image src={Linguakill} width={347} height={230} alt='#' />
+                  <Image src={Linguakill} width={347} height={230} alt='#'/>
                   <span
                     className={'mt-5 w-11/12 text-2xl font-bold text-black'}
                   >
@@ -83,7 +83,7 @@ function OverviewCarousel() {
             <Link href='/'>
               <div className='isolate mx-8 flex w-10/12 flex-col gap-5 rounded-2xl bg-white p-5 shadow-sm lg:mx-0'>
                 <div className='m-5'>
-                  <Image src={Germany} width={347} height={230} alt='#' />
+                  <Image src={Germany} width={347} height={230} alt='#'/>
                   <h1 className='mt-5 w-11/12 text-2xl font-bold text-black'>
                     Germaniyada work and travel dasturi
                   </h1>
@@ -94,10 +94,10 @@ function OverviewCarousel() {
           </div>
 
           <div className='mt-10'>
-            <Link href='Vengriya'>
+            <Link href='/Vengriya'>
               <div className='isolate mx-8 flex w-10/12 flex-col gap-5 rounded-2xl bg-white p-5 shadow-sm lg:mx-0'>
                 <div className='m-5'>
-                  <Image src={Vengriya} width={347} height={230} alt='#' />
+                  <Image src={Vengriya} width={347} height={230} alt='#'/>
                   <h1 className='mt-5 w-11/12 text-2xl font-bold text-black'>
                     Vengriyada talim olish imkoniyati
                   </h1>
@@ -108,10 +108,10 @@ function OverviewCarousel() {
           </div>
 
           <div className='mt-10'>
-            <Link href='Linguakill'>
+            <Link href='/Linguakill'>
               <div className='isolate mx-8 flex w-10/12 flex-col gap-5 rounded-2xl bg-white p-5 shadow-sm lg:mx-0'>
                 <div className='m-5'>
-                  <Image src={Linguakill} width={347} height={230} alt='#' />
+                  <Image src={Linguakill} width={347} height={230} alt='#'/>
                   <h1 className='mt-5 w-11/12 text-2xl font-bold text-black'>
                     Linguaskill Ingliz tili testi bilan tez natijalar
                   </h1>

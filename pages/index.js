@@ -17,7 +17,6 @@ function Home() {
   useEffect(() => {
     AOS.init({
       easing: 'ease-out-cubic',
-      // once: true,
       offset: 50,
 
       duration: 1200,

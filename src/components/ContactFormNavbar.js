@@ -17,22 +17,21 @@ function ContactFormNavbar() {
   } = useForm();
 
   function onSubmit(value) {
-    const dataSheet = {
-      date: `${moment().format('LTS L').toString()}`,
-      name: prop('name', value),
-      number: prop('number', value),
-      message: prop('message', value),
-    };
     axios
-      .post('https://sheetdb.io/api/v1/xoqc14bbptwcy', dataSheet)
-      .then((response) => {
-        if (response.status == 201 || response.status == 200) {
-          setState(true);
-        } else {
-          console.log(response);
-        }
+      .post(`/api/sendMessage`, {
+        name: prop('name', value),
+        phone: prop('number', value),
+        message: prop('message', value),
+      })
+      .then((r) => {
+        setState(true);
+        return r;
+      })
+      .catch(e => {
+        setState(false);
+        console.log(e.message);
+        return e;
       });
-
     reset();
   }
 
@@ -83,7 +82,7 @@ function ContactFormNavbar() {
           </p>
         </button>
       </form>
-      <Notification open={state} close={() => setState(false)} />
+      <Notification open={state} close={() => setState(false)}/>
     </div>
   );
 }
