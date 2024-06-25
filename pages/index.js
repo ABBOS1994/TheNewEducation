@@ -18,7 +18,6 @@ function Home() {
     AOS.init({
       easing: 'ease-out-cubic',
       offset: 50,
-
       duration: 1200,
     });
   }, []);
