@@ -21,8 +21,15 @@ function ContactForm({ setState }) {
         phone: prop('number', value),
         message: prop('message', value),
       })
-      .then((r) => setState(true))
-      .catch(e => setState(false));
+      .then((r) => {
+        setState(true);
+        return r;
+      })
+      .catch(e => {
+        setState(false);
+        console.log(e.message);
+        return e;
+      });
     reset();
   }
 
