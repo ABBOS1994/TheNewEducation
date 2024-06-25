@@ -22,7 +22,7 @@ Matin: ${message}`;
         chat_id: process.env.CHAT_ID,
       },
     );
-    res.status(200).json({ message: 'Success!' });
+    res.status(200).json({ message: 'Success!', response: response.status });
   } catch (error) {
     console.error('Error sending Telegram message:', error);
     res.status(500).json({ message: error.message });
