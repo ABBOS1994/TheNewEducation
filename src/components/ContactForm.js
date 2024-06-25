@@ -3,7 +3,6 @@ import { FooterIcon } from '../assets/Icons/Icons';
 import { InputField } from './InputField';
 import { prop } from 'ramda';
 import { useForm } from 'react-hook-form';
-import moment from 'moment/moment';
 import axios from 'axios';
 
 function ContactForm({ setState }) {
@@ -16,23 +15,14 @@ function ContactForm({ setState }) {
   } = useForm();
 
   function onSubmit(value) {
-    const d = `
-    https://theneweducation.uz saytidan ariza: 
-    Vaqti: ${moment().format('LTS L').toString()},
-    Isim: ${prop('name', value)},
-    Raqam: ${prop('number', value)},
-    Matin: ${prop('message', value)}
-    `;
     axios
-      .post(`https://api.telegram.org/bot6736425310:AAEwpmUTnIn8fi6z7VvO1vbfSgqoxsLgUVQ/sendMessage?chat_id=-1002234033739&text=${d}`)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201 || response.status === 200) {
-          setState(true);
-        } else {
-          console.log(response);
-        }
-      });
+      .post(`/api/sendMessage`, {
+        name: prop('name', value),
+        phone: prop('number', value),
+        message: prop('message', value),
+      })
+      .then((r) => setState(true))
+      .catch(e => setState(false));
     reset();
   }
 
