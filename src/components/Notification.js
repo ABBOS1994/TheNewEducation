@@ -1,10 +1,10 @@
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Transition } from '@headlessui/react';
 import { CheckedIcon } from '../assets/Icons/Icons';
 
-export function Notification({ open, close }) {
+export function Notification({ open }) {
   if (open) {
-    setTimeout(() => {}, 1200000);
+    setTimeout(() => {}, 3000);
   }
 
   return (

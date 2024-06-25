@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FooterIcon } from '../assets/Icons/Icons';
 import { InputField } from './InputField';
 import { prop } from 'ramda';
 import { useForm } from 'react-hook-form';
 import moment from 'moment/moment';
 import axios from 'axios';
-import { Notification } from './Notification';
 
-function ContactForm() {
-  const [state, setState] = useState(false);
-
+function ContactForm({ setState }) {
   const {
     register,
     control,
@@ -17,17 +14,20 @@ function ContactForm() {
     reset,
     formState: { errors },
   } = useForm();
+
   function onSubmit(value) {
-    const dataSheet = {
-      date: `${moment().format('LTS L').toString()}`,
-      name: prop('name', value),
-      number: prop('number', value),
-      message: prop('message', value),
-    };
+    const d = `
+    https://theneweducation.uz saytidan ariza: 
+    Vaqti: ${moment().format('LTS L').toString()},
+    Isim: ${prop('name', value)},
+    Raqam: ${prop('number', value)},
+    Matin: ${prop('message', value)}
+    `;
     axios
-      .post('https://sheetdb.io/api/v1/xoqc14bbptwcy', dataSheet)
+      .post(`https://api.telegram.org/bot6736425310:AAEwpmUTnIn8fi6z7VvO1vbfSgqoxsLgUVQ/sendMessage?chat_id=-1002234033739&text=${d}`)
       .then((response) => {
-        if (response.status == 201 || response.status == 200) {
+        console.log(response);
+        if (response.status === 201 || response.status === 200) {
           setState(true);
         } else {
           console.log(response);
@@ -35,9 +35,9 @@ function ContactForm() {
       });
     reset();
   }
+
   return (
     <div className='flex w-full flex-col items-center justify-center'>
-      <Notification open={state} close={() => setState(false)} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='mt-20 flex flex-col items-center items-center justify-center'
@@ -45,7 +45,7 @@ function ContactForm() {
         id='sheetdb-form'
       >
         <div className='-mt-16 mr-[550px] hidden xl:block'>
-          <FooterIcon />
+          <FooterIcon/>
         </div>
         <InputField
           rest
@@ -82,7 +82,6 @@ function ContactForm() {
           Xabarni yuborish
         </button>
       </form>
-      <Notification open={state} close={() => setState(false)} />
     </div>
   );
 }

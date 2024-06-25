@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Navbar from '../src/components/Navbar';
 import OverviewHeader from '../src/container/OverviewHeader';
@@ -8,11 +8,12 @@ import OverviewMainTwo from '../src/container/OverviewMainTwo';
 import Footer from '../src/components/Footer';
 import OverviewChild from '../src/container/OverviewChild';
 import OverviewCarousel from '../src/container/OverviewCarousel';
-import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Notification } from '../src/components/Notification';
 
 function Home() {
+  const [state, setState] = useState(false);
   useEffect(() => {
     AOS.init({
       easing: 'ease-out-cubic',
@@ -25,8 +26,8 @@ function Home() {
   return (
     <div className='bg-white'>
       <Head>
-        <title>English Campus</title>
-        <meta name='title' content='English Campus' />
+        <title>The New Education</title>
+        <meta name='title' content='The New Education' />
         <meta
           name='description'
           content="Xorijda o'qish, Til kurslari va Bolalar uchun kurslar"
@@ -62,9 +63,10 @@ function Home() {
           <OverviewMainOne />
           <OverviewMainTwo />
           <OverviewChild />
-          <Footer />
+          <Footer setState={setState} />
         </div>
       </main>
+      <Notification open={state} close={() => setState(false)}/>
     </div>
   );
 }

@@ -7,8 +7,9 @@ import {
   YouTubeIcon,
 } from '../assets/Icons/Icons';
 import ContactForm from './ContactForm';
+import React from 'react';
 
-function Footer() {
+function Footer({ setState }) {
   return (
     <div
       className='footer-image flex h-[1040px] justify-center overflow-hidden bg-white bg-cover bg-no-repeat'
@@ -39,22 +40,22 @@ function Footer() {
               chiqish
             </h1>
           </div>
-          <ContactForm />
+          <ContactForm setState={setState}/>
           <div className='mt-20 flex w-full justify-center xl:mt-16'>
             <a href='https://www.facebook.com/profile.php'>
-              <FacebookIcon />
+              <FacebookIcon/>
             </a>
             <a href='https://instagram.com/englishcampus.uz' className='ml-6'>
-              <InstagramIcon />
+              <InstagramIcon/>
             </a>
             <a href='https://t.me/englishcampus1' className='ml-6'>
-              <TelegramIcon />
+              <TelegramIcon/>
             </a>
             <a
               href='https://youtube.com/@englishcampuseducation3427'
               className='ml-6'
             >
-              <YouTubeIcon />
+              <YouTubeIcon/>
             </a>
           </div>
         </div>
