@@ -22,7 +22,7 @@ function Navbar() {
   return (
     <div className="fixed z-50 w-full overflow-hidden bg-navbar-bg xl:fixed xl:z-40 xl:grid xl:place-items-center">
       <div className="m-auto flex w-full items-center justify-between px-5 py-5 font-text xl:container">
-        <Link href="/" duration={5000}>
+        <Link to={"header"} href={"header"} duration={5000}>
           <h1 className="cursor-pointer uppercase text-red md:ml-5 xl:ml-1.5" data-aos="fade-right">
             theneweducation
           </h1>
