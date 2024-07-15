@@ -1,16 +1,16 @@
+// pages/itep/js
 import React from "react"
 import Navbar from "../src/components/Navbar"
-import VengriyaMain from "../src/components/VengriyaMain"
 import Footer from "../src/components/Footer"
+import ITepMain from "../src/components/ITepMain"
 
-function Vengriya() {
+export default function ITep() {
   return (
-    <div>
+    <div className="bg-white">
       <Navbar />
-      <VengriyaMain />
+      <ITepMain />
       <Footer />
     </div>
   )
 }
 
-export default Vengriya
