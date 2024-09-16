@@ -100,4 +100,7 @@ const ContactForm = forwardRef((props, ref) => {
   )
 })
 
+ContactForm.displayName = "ContactForm"
+
+
 export default ContactForm

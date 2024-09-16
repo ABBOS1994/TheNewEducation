@@ -93,5 +93,6 @@ const ContactFormNavbar = forwardRef((props, ref) => {
     </div>
   )
 })
+ContactFormNavbar.displayName = "ContactFormNavbar"
 
 export default ContactFormNavbar
