@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useState, forwardRef } from "react"
 import { FooterIcon } from "../assets/Icons/Icons"
-import { InputField } from "./InputField"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
+import InputMask from "react-input-mask"
 import axios from "axios"
+import { Notification } from "./Notification"
 
-function ContactForm({ setState }) {
+const ContactForm = forwardRef((props, ref) => {
+  const [state, setState] = useState(false)
   const {
     register,
     control,
@@ -13,25 +15,23 @@ function ContactForm({ setState }) {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (value) => {
+  const onSubmit = ({ name, phone, message }) => {
     axios
-      .post(`/api/sendMessage`, {
-        name: value.name,
-        phone: value.number,
-        message: value.message,
-      })
+      .post(`/api/sendMessage`, { name, phone, message })
       .then((r) => {
         setState(true)
         return r
       })
       .catch((e) => {
-        setState(true)
+        setState(false)
         console.error(e.message)
         return e
       })
       .finally(() => {
         setTimeout(() => setState(false), 3000)
-        reset()
+        reset({
+          name: "", phone: "", message: "",
+        })
       })
   }
 
@@ -43,31 +43,50 @@ function ContactForm({ setState }) {
         method="POST"
         id="sheetdb-form"
       >
+        {/* Icon */}
         <div className="-mt-16 mr-[550px] hidden xl:block">
-          <FooterIcon />
+          <FooterIcon/>
         </div>
-        <InputField
-          register={register}
-          control={control}
-          error={errors.name}
-          name="name"
+
+        <input
+          {...register("name", { required: true })}
+          className="border bg-white placeholder:text-gray-500 text-black mt-3 w-[345px] rounded-xl px-5 py-3 md:w-[610px] lg:w-[450px] 2xl:w-full"
           placeholder="Ismingiz"
         />
-        <InputField
-          register={register}
+        {errors.name && <p className="text-red-500">Ismingizni kiriting</p>}
+
+        <Controller
+          name="phone"
           control={control}
-          error={errors.phone_number}
-          name="number"
-          className="text-secondary mt-4 h-11 w-full rounded-full pl-6"
-          placeholder="Telefon raqamingiz"
-          mask="+\9\98 (99) 999-99-99"
+          render={({ field: { onChange, onBlur, value, name, ref: innerRef } }) => (
+            <InputMask
+              mask="+\9\98 (99) 999-99-99"
+              value={value}
+              onChange={onChange}
+              onBlur={onBlur}
+              name={name}
+              ref={innerRef}
+            >
+              {(inputProps) => (
+                <input
+                  {...inputProps}
+                  className="border bg-white placeholder:text-gray-500 text-black mt-4 w-[345px] rounded-xl px-5 py-3 md:w-[610px] lg:w-[450px] 2xl:w-full"
+                  placeholder="Telefon raqamingiz"
+                  required
+                />
+              )}
+            </InputMask>
+          )}
         />
+        {errors.phone && <p className="text-red-500">Telefon raqamingizni kiriting</p>}
+
         <textarea
-          name="message"
-          {...register("message")}
-          className="border-colorRounded/40 bg-message-bg placeholder:text-placeholder-color text-secondary mt-3 h-52 w-[345px] rounded-xl border bg-white px-5 py-3 text-black md:w-[610px] lg:w-[450px] 2xl:w-full"
+          {...register("message", { required: true })}
+          className="border bg-white placeholder:text-gray-500 text-black mt-3 h-52 w-[345px] rounded-xl px-5 py-3 md:w-[610px] lg:w-[450px] 2xl:w-full"
           placeholder="Xabaringizni shu yerga yozing..."
         />
+        {errors.message && <p className="text-red-500">Xabarni kiriting</p>}
+
         <button
           className="mt-8 h-16 w-10/12 rounded-full bg-gradient-to-r from-gradientStart to-gradientFinish text-base tracking-wide text-white md:w-8/12 xl:h-12 xl:w-7/12 xl:rounded-3xl"
           type="submit"
@@ -75,8 +94,10 @@ function ContactForm({ setState }) {
           Xabarni yuborish
         </button>
       </form>
+
+      <Notification open={state} close={() => setState(false)}/>
     </div>
   )
-}
+})
 
 export default ContactForm

@@ -1,12 +1,10 @@
-import React, { useState } from "react"
-import { InputField } from "./InputField"
-import { prop } from "ramda"
-import { useForm } from "react-hook-form"
-import moment from "moment/moment"
+import React, { useState, forwardRef } from "react"
+import { useForm, Controller } from "react-hook-form"
+import InputMask from "react-input-mask"
 import axios from "axios"
 import { Notification } from "./Notification"
 
-function ContactFormNavbar() {
+const ContactFormNavbar = forwardRef((props, ref) => {
   const [state, setState] = useState(false)
   const {
     register,
@@ -16,75 +14,84 @@ function ContactFormNavbar() {
     formState: { errors },
   } = useForm()
 
-  function onSubmit(value) {
+  const onSubmit = ({ name, phone, message }) => {
     axios
-      .post(`/api/sendMessage`, {
-        name: prop("name", value),
-        phone: prop("number", value),
-        message: prop("message", value),
-      })
+      .post(`/api/sendMessage`, { name, phone, message })
       .then((r) => {
         setState(true)
         return r
       })
       .catch((e) => {
         setState(false)
-        console.log(e.message)
+        console.error(e.message)
         return e
       })
-    reset()
+      .finally(() => reset({
+        name: "",
+        phone: "",
+        message: "",
+      }))
   }
 
   return (
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mt-10 flex flex-col items-center justify-center "
+        className="mt-10 flex flex-col items-center justify-center space-y-6 text-black"
       >
-        <div className="ml-4 md:ml-8 lg:flex xl:ml-0 2xl:w-11/12">
-          <InputField
-            rest
-            register={register}
-            control={control}
-            rules={{ required: true }}
-            error={prop("name", errors)}
-            name="name"
+        <div className="w-full lg:flex lg:space-x-4 2xl:w-11/12">
+          <input
+            {...register("name", { required: true })}
+            className="border bg-white placeholder:text-placeholder-color text-secondary w-full lg:w-1/2 h-12 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Ismingiz"
           />
+          {errors.name && <p className="text-red-500 text-sm mt-1">Ismingizni kiriting</p>}
 
-          <InputField
-            register={register}
+          <Controller
+            name="phone"
             control={control}
-            rules={{ required: true }}
-            error={prop("number", errors)}
-            name="number"
-            className="text-secondary mt-4 h-11 w-full rounded-full pl-6  "
-            placeholder="Telefon raqamingiz"
+            render={({ field: { onChange, onBlur, value, name, ref: innerRef } }) => (
+              <InputMask
+                mask="+\9\98 (99) 999-99-99"
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                name={name}
+                ref={innerRef}
+              >
+                {(inputProps) => (
+                  <input
+                    {...inputProps}
+                    className="border bg-white placeholder:text-placeholder-color text-secondary mt-4 lg:mt-0 w-full lg:w-1/2 h-12 rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Telefon raqamingiz"
+                    required
+                  />
+                )}
+              </InputMask>
+            )}
           />
+          {errors.phone && <p className="text-red-500 text-sm mt-1">Telefon raqamingizni kiriting</p>}
         </div>
+
         <textarea
-          name="message"
-          {...register("message")}
-          className="border-colorRounded/40 bg-message-bg placeholder:text-placeholder-color text-secondary ml-6 mt-3 h-52 w-[345px] rounded-3xl border bg-white px-5 py-3 text-black md:-ml-10
-          md:w-[630px] lg:ml-6 lg:ml-8 lg:w-[900px] xl:ml-0 xl:w-[900px]
-           xl:rounded-lg 2xl:ml-4 2xl:w-11/12"
+          {...register("message", { required: true })}
+          className="border bg-white placeholder:text-placeholder-color text-secondary w-full h-52 rounded-xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Qanday savollaringiz bor, yerga yozing..."
           required
         />
+        {errors.message && <p className="text-red-500 text-sm mt-1">Xabarni kiriting</p>}
 
         <button
-          className="ml-4 mt-8 h-16 w-11/12 w-[320px] rounded-full bg-gradient-to-r from-gradientStart to-gradientFinish md:ml-0 md:w-5/12
-            xl:h-12 xl:w-5/12 xl:rounded-3xl"
-          onClick={handleSubmit(onSubmit)}
+          className="h-12 w-full lg:w-5/12 rounded-full bg-gradient-to-r from-gradientStart to-gradientFinish text-white tracking-wide text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="submit"
         >
-          <p className="text-base tracking-wide text-white">
-            Kurs uchun arizani yuborish
-          </p>
+          Kurs uchun arizani yuborish
         </button>
       </form>
-      <Notification open={state} close={() => setState(false)} />
+
+      <Notification open={state} close={() => setState(false)}/>
     </div>
   )
-}
+})
 
 export default ContactFormNavbar
